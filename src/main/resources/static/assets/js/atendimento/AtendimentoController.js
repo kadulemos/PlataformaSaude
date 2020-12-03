@@ -7,13 +7,23 @@ var AtendimentoController = new function() {
 			$.each(data, function(i, item) {
 		        $('<tr>').append(
 		            $('<td>').text(item.idAtendimento),
-		            $('<td>').text(item.dataHora),
+					$('<td>').text(item.dataHora),
+					$('<td>').text(item.nomeProcedimento),
 					$('<td>').text(item.modalidade),
-					$('<td>').text(item.medico),
-					$('<td>').text(item.paciente),
+					$('<td>').text(item.medico.idMedico),
+					$('<td>').text(item.paciente.idPaciente),
 					$('<td class="actions"><a class="btn btn-warning btn-xs" onclick="AtendimentoController.edit('+item.idAtendimento+')">Editar</a><a class="btn btn-danger btn-xs" onclick="AtendimentoController.delete('+item.idAtendimento+')">Excluir</a></td>')
 		        ).appendTo('#atendimentosTableBody');
 		    });
+		});
+	}
+	// Criação da lista para chamar no laudo
+	this.atendimentoList = function() {
+		$('#atendimentoSelectList').empty();
+		$.get( "/atendimentos", function( data ) {
+			$.each(data, function(i, item) {
+				$('<option value='+item.idAtendimento+'>'+item.nomeProcedimento+'</option>').appendTo('#atendimentoSelectList');
+			});
 		});
 	}
 	
@@ -98,24 +108,27 @@ var AtendimentoController = new function() {
 	
 	this.setDadosAtendimentoModal = function(atendimento) {
 		$('#atendimentoDataHora').val(atendimento.dataHora),
-		$('#atendimentoModalidade').val(atendimento.modalidade),
-		$('#atendimentoMedico').val(atendimento.medico),
-		$('#atendimentoPaciente').val(atendimento.paciente)
+		$('#atendimentoNomeProcedimento').val(atendimento.nomeProcedimento),
+		$('#atendimentoModalidade').val(atendimento.modalidade)
 	}
 	
 	this.limparDadosAtendimentoModal = function() {
 		$('#atendimentoDataHora').val(''),
-		$('#atendimentoModalidade').val(''),
-		$('#atendimentoMedico').val(''),
-		$('#atendimentoPaciente').val('')
+		$('atendimentoNomeProcedimento').val(''),
+		$('#atendimentoModalidade').val('')
 	}
 		
 	this.getDadosAtendimentoModal = function() {
 		var atendimento = {
 			dataHora: $('#atendimentoDataHora').val(),
+			nomeProcedimento: $('#atendimentoNomeProcedimento').val(),
 			modalidade: $('#atendimentoModalidade').val(),
-			medico: $('#atendimentoMedico').val(),
-			paciente: $('#atendimentoPaciente').val()
+			medico: {
+				idMedico: $('#medicoSelectList').val()
+			},
+			paciente: {
+				idPaciente: $('#pacienteSelectList').val()
+			}
 		}
 		
 		return atendimento;

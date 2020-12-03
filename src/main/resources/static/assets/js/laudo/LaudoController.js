@@ -95,22 +95,21 @@ var LaudoController = new function() {
 	}
 	
 	this.setDadosLaudoModal = function(laudo) {
-		$('#laudoNome').val(laudo.nome),
 		$('#laudoTexto').val(laudo.texto),
 		$('#laudoAtendimento').val(laudo.atendimento)
 	}
 	
 	this.limparDadosLaudoModal = function() {
-		$('#laudoNome').val(''),
 		$('#laudoTexto').val(''),
-		$('#laudoAtendimento').val('')
+		$('#atendimentoSelectList').val('')
 	}
 		
 	this.getDadosLaudoModal = function() {
 		var laudo = {
-			nome: $('#laudoNome').val(),
 			texto: $('#laudoTexto').val(),
-			atendimento: $('#laudoAtendimento').val()
+			atendimento: {
+				id atendimento: $('#atendimentoSelectList').val()
+			}
 		}
 		
 		return laudo;

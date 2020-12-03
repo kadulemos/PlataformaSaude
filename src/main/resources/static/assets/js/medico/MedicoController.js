@@ -14,6 +14,16 @@ var MedicoController = new function() {
 		    });
 		});
 	}
+
+	// Criação da lista para chamar no atendimento
+    this.medicoList = function() {
+        $('#medicosSelectList').empty();
+        $.get( "/medicos", function( data ) {
+            $.each(data, function(i, item) {
+                $('<option value='+item.idMedico+'>'+item.nome+'</option>').appendTo('#medicoSelectList');
+            });
+        });
+    }
 	
 	this.delete = function(idMedico) {
 		$.ajax({

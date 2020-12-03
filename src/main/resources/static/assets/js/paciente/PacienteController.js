@@ -17,6 +17,17 @@ var PacienteController = new function() {
 		    });
 		});
 	}
+
+	// Criação da lista para chamar no atendimento
+	this.pacienteList = function() {
+		$('#pacienteSelectList').empty();
+		$.get( "/pacientes", function( data ) {
+			$.each(data, function(i, item) {
+				$('<option value='+item.idPaciente+'>'+item.nome+'</option>').appendTo('#pacienteSelectList');
+				console.log(item);
+			});
+		});
+	}
 	
 	this.delete = function(idPaciente) {
 		$.ajax({
