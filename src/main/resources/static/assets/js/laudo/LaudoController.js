@@ -108,7 +108,7 @@ var LaudoController = new function() {
 		var laudo = {
 			texto: $('#laudoTexto').val(),
 			atendimento: {
-				id atendimento: $('#atendimentoSelectList').val()
+				idAtendimento: $('#atendimentoSelectList').val()
 			}
 		}
 		
